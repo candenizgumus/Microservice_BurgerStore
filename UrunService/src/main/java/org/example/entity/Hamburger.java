@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.entity.enums.ECikartilacakUrunMalzemeleri;
-import org.example.entity.enums.EExtraMalzeme;
-import org.example.entity.enums.EPismeDerecesi;
-import org.example.entity.enums.ESos;
+
 
 import java.util.Set;
 

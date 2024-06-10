@@ -1,4 +1,4 @@
-package org.example.entity.enums;
+package com.minab.entity.enums;
 
 public enum ECikartilacakUrunMalzemeleri
 {
