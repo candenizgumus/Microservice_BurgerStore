@@ -11,6 +11,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,10 +26,11 @@ public class UserProfile
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @CreationTimestamp
-    Long createAt;
+    LocalDateTime createAt;
     @UpdateTimestamp
-    Long updateAt;
+    LocalDateTime updateAt;
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     EStatus status = EStatus.ACTIVE;
 
     Long authId;
@@ -38,10 +42,11 @@ public class UserProfile
     @Enumerated(EnumType.STRING)
     @Builder.Default
     EMusteriType musteriType = EMusteriType.BIREYSEL;
-    Long dogumTarihi;
+    LocalDate dogumTarihi;
     @Enumerated(EnumType.STRING)
     ECinsiyet cinsiyet;
-    Long puan;
+    @Builder.Default
+    Double puan = 7.0;
     Double bakiye;
 
 }

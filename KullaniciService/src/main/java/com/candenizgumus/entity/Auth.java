@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,19 +25,22 @@ public class Auth
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @CreationTimestamp
-    Long createAt;
+    LocalDateTime createAt;
     @UpdateTimestamp
-    Long updateAt;
+    LocalDateTime updateAt;
     @Builder.Default
+    @Enumerated(EnumType.STRING)
     EStatus status = EStatus.ACTIVE;
 
 
     String ad;
     String soyad;
+    @Column(unique = true)
     String email;
+    @Column(unique = true)
     String telefon;
     String sifre;
-    Long dogumTarihi;
+    LocalDate dogumTarihi;
     @Enumerated(EnumType.STRING)
     ECinsiyet cinsiyet;
 }
