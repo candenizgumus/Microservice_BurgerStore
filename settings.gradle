@@ -1,2 +1,4 @@
 rootProject.name = 'Microservice_BurgerStore'
 include 'ConfigServerGit'
+include 'KullaniciService'
+
