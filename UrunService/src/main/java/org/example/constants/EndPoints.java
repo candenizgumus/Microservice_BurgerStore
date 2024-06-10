@@ -5,6 +5,7 @@ public class EndPoints
 
 
     public static final String URUN = "/urun";
+    public static final String HAMBURGER = "/hamburger";
 
 
 

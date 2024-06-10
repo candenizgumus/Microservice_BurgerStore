@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.entity.enums.ECikartilacakUrunMalzemeleri;
+
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,4 +21,7 @@ public class Hamburger
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @ElementCollection(targetClass = ECikartilacakUrunMalzemeleri.class, fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private Set<ECikartilacakUrunMalzemeleri> malzemeler;
 }
