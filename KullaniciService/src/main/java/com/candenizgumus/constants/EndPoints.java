@@ -5,6 +5,8 @@ public class EndPoints
 
 
     public static final String AUTH = "/auth";
+    public static final String USERPROFILE = "/userprofile";
+    public static final String ADRES = "/adres";
 
 
 

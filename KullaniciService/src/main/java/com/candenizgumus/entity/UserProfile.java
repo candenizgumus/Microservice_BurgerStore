@@ -1,6 +1,7 @@
 package com.candenizgumus.entity;
 
 import com.candenizgumus.entity.enums.ECinsiyet;
+import com.candenizgumus.entity.enums.EMusteriType;
 import com.candenizgumus.entity.enums.EStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,8 +16,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @Data
 @Entity
-@Table(name = "tblauth")
-public class Auth
+@Table(name = "tbluserprofile")
+public class UserProfile
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +29,19 @@ public class Auth
     @Builder.Default
     EStatus status = EStatus.ACTIVE;
 
-
+    Long authId;
     String ad;
     String soyad;
     String email;
     String telefon;
-    String sifre;
+    String tc;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    EMusteriType musteriType = EMusteriType.BIREYSEL;
     Long dogumTarihi;
     @Enumerated(EnumType.STRING)
     ECinsiyet cinsiyet;
+    Long puan;
+    Double bakiye;
+
 }
