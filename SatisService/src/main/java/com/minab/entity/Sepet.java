@@ -31,12 +31,18 @@ public class Sepet {
     @Enumerated(EnumType.STRING)
     EStatus status = EStatus.ACTIVE;
 
+
     Long userProfileId;
     Double araToplam;
     Double vergi;
     Double toplam;
     @Enumerated(EnumType.STRING)
-    EOdemeTipi odemeTipi;
+    @Builder.Default
+    EOdemeTipi odemeTipi =  EOdemeTipi.KREDIKARTI;
     @Enumerated(EnumType.STRING)
-    EServisTipi servisTipi;
+    @Builder.Default
+    EServisTipi servisTipi = EServisTipi.PAKET_SERVIS;
+
+
+
 }

@@ -7,6 +7,7 @@ import com.candenizgumus.exceptions.ErrorType;
 import com.candenizgumus.exceptions.KullaniciServiceException;
 import com.candenizgumus.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -15,6 +16,7 @@ public class AuthService
 {
     private final AuthRepository authRepository;
     private final UserProfileService userProfileService;
+    private final RabbitTemplate rabbitTemplate;
 
     public String save(AuthRegisterRequest dto)
     {
@@ -55,8 +57,15 @@ public class AuthService
                 .email(dto.getEmail())
                 .build();
 
-        userProfileService.save(userProfile);
 
+        userProfileService.save(userProfile);
+        //Sepet nesnesi olusturma ve sepet id alma
+
+        Object sepetId = rabbitTemplate.convertSendAndReceive("direct.exchange", "key.savesepet", userProfile.getId());
+
+
+        userProfile.setSepetId((Long) sepetId);
+        userProfileService.save(userProfile);
         return "Kayıt Tamamlandı";
 
 

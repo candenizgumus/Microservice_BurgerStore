@@ -48,5 +48,6 @@ public class UserProfile
     @Builder.Default
     Double puan = 7.0;
     Double bakiye;
+    Long sepetId;
 
 }

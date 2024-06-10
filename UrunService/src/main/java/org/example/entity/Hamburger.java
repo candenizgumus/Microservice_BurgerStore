@@ -44,6 +44,7 @@ public class Hamburger
     private Double toplamFiyat;
 
 
+    //TODO HER KULLANICIYA SEPET VER, SEPETDETAYINDA BAĞLANTI KURMA.
     @PrePersist
     public void setToplamFiyat()
     {
