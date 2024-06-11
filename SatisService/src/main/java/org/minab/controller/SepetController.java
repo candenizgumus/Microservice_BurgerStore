@@ -29,7 +29,7 @@ public class SepetController {
     }
 
     @DeleteMapping(EndPoints.SEPETITEMIZLE)
-    public ResponseEntity<Sepet> sepetiTemizle(@RequestParam Long sepetId)
+    public ResponseEntity<String> sepetiTemizle(@RequestParam Long sepetId)
     {
         return ResponseEntity.ok(sepetService.sepetiTemizle(sepetId));
     }
