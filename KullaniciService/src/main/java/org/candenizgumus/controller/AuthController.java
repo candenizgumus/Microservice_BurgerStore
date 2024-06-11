@@ -7,9 +7,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.candenizgumus.dto.request.ActivateCodeRequestDto;
 import org.candenizgumus.dto.request.AuthRegisterRequest;
+import org.candenizgumus.entity.Auth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+import java.util.List;
 
 import static org.candenizgumus.constants.EndPoints.*;
 
@@ -30,6 +33,12 @@ public class AuthController
     @PutMapping(ACTIVATION)
     public ResponseEntity<String> activatecode(@RequestBody ActivateCodeRequestDto dto) {
         return ResponseEntity.ok(authService.activateCode(dto));
+    }
+
+    @GetMapping(FINDALL)
+    public ResponseEntity<List<Auth>> findAll()
+    {
+        return ResponseEntity.ok(authService.findAll());
     }
 
 }

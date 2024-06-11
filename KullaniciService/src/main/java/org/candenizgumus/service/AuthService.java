@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class AuthService
@@ -115,4 +117,8 @@ public class AuthService
         }
     }
 
+    public List<Auth> findAll()
+    {
+        return authRepository.findAll();
+    }
 }
