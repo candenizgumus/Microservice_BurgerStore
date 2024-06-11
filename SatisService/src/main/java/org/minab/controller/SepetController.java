@@ -1,5 +1,6 @@
 package org.minab.controller;
 
+import org.minab.entity.Sepet;
 import org.minab.entity.enums.ECikartilacakUrunMalzemeleri;
 import org.minab.entity.enums.EExtraMalzeme;
 import org.minab.entity.enums.EPismeDerecesi;
@@ -22,6 +23,12 @@ public class SepetController {
     public ResponseEntity<String> sepeteHamburgerEkle(@RequestParam Long sepetId,@RequestParam Long hamburgerId, Integer adet,@RequestParam Set<ECikartilacakUrunMalzemeleri> cikarilacakMalzemeler, @RequestParam Set<EExtraMalzeme> ekstraMalzemeler, @RequestParam EPismeDerecesi pismeDerecesi, @RequestParam Set<ESos> soslar)
     {
         return ResponseEntity.ok(sepetService.sepeteHamburgerEkle( sepetId,hamburgerId, adet, cikarilacakMalzemeler, ekstraMalzemeler, pismeDerecesi, soslar));
+    }
+
+    @GetMapping(EndPoints.SEPETIMIGORUNTULE)
+    public ResponseEntity<Sepet> sepetiGoruntule(@RequestParam Long sepetId)
+    {
+        return ResponseEntity.ok(sepetService.sepetiGoruntule(sepetId));
     }
 
 }

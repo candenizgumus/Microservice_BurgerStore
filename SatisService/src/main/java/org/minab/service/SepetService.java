@@ -93,4 +93,17 @@ public class SepetService {
 
         return ekstraFiyatFarki;
     }
+
+    public Sepet sepetiGoruntule(Long sepetId)
+    {
+        Sepet sepet = sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
+        List<SepetDetay> sepetDetayList = sepetDetayService.findAllBySepetId(sepetId);
+        sepet.setAraToplam(0.0); //TODO HATADAN KAYNAKLI BURADA ARA TOPLAM SIFIRA EŞİTLENDİ DAHA SONRA KALDIRILACAK NEDENİ BİLİNMİYOR.
+        sepetDetayList.forEach(sepetDetay -> sepet.getSepetDetayList().add(sepetDetay));
+        sepetDetayList.forEach(sepetDetay -> sepet.setAraToplam(sepetDetay.getToplamFiyat()+sepet.getAraToplam()));
+        sepet.setVergi(sepet.getAraToplam()*0.2);
+        sepet.setToplam(sepet.getAraToplam()+sepet.getVergi());
+        return sepet;
+
+    }
 }

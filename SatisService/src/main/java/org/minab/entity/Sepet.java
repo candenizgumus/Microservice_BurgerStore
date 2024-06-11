@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,7 +34,10 @@ public class Sepet {
 
 
     Long userProfileId;
-    Double araToplam;
+    @OneToMany()
+    List<SepetDetay> sepetDetayList;
+    @Builder.Default
+    Double araToplam = 0.0;
     Double vergi;
     Double toplam;
     @Enumerated(EnumType.STRING)
