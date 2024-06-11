@@ -1,21 +1,22 @@
 package org.example.service;
-
 import lombok.RequiredArgsConstructor;
+
+import org.example.config.model.HamburgerModel;
 import org.example.dto.request.HamburgerSaveRequest;
 import org.example.entity.Hamburger;
-import org.example.exceptions.ErrorType;
-import org.example.exceptions.UrunServiceException;
 import org.example.repository.HamburgerRepository;
+
+import org.minab.exceptions.ErrorType;
+import org.minab.exceptions.UrunServiceException;
+
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class HamburgerService
 {
-    private final HamburgerRepository  hamburgerRepository;
+    private final HamburgerRepository hamburgerRepository;
 
 
     public String save(HamburgerSaveRequest dto)
@@ -24,9 +25,11 @@ public class HamburgerService
         return "Hamburger kaydedildi.";
     }
 
-    @RabbitListener("findhamburger")
-    public Hamburger find(Long id)
+    @RabbitListener(queues = "findhamburger")
+    public HamburgerModel find(Long hamburgerId)
     {
-        return hamburgerRepository.findById(id).orElseThrow(() -> new UrunServiceException(ErrorType.HAMBURGER_NOT_FOUND));
+        Hamburger hamburger = hamburgerRepository.findById(hamburgerId).orElseThrow(() -> new UrunServiceException(ErrorType.HAMBURGER_NOT_FOUND));
+        HamburgerModel hamburgerModel = HamburgerModel.builder().id(hamburger.getId()).ad(hamburger.getAd()).aciklama(hamburger.getAciklama()).birimFiyat(hamburger.getBirimFiyat()).build();
+        return hamburgerModel;
     }
 }

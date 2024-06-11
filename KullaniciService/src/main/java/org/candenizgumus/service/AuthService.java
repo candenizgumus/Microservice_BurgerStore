@@ -1,0 +1,73 @@
+package org.candenizgumus.service;
+
+import org.candenizgumus.dto.request.AuthRegisterRequest;
+import org.candenizgumus.entity.Auth;
+import org.candenizgumus.entity.UserProfile;
+import org.candenizgumus.exceptions.ErrorType;
+import org.candenizgumus.exceptions.KullaniciServiceException;
+import org.candenizgumus.repository.AuthRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.stereotype.Service;
+
+@RequiredArgsConstructor
+@Service
+public class AuthService
+{
+    private final AuthRepository authRepository;
+    private final UserProfileService userProfileService;
+    private final RabbitTemplate rabbitTemplate;
+
+    public String save(AuthRegisterRequest dto)
+    {
+        if (!dto.getSifre().equals(dto.getSifreTekrar()))
+        {
+            throw new KullaniciServiceException(ErrorType.SIFRELER_AYNI_DEGIL);
+        }
+        if (authRepository.findByEmail(dto.getEmail()).isPresent())
+        {
+            throw new KullaniciServiceException(ErrorType.EMAIL_TAKEN);
+        }
+        if (!dto.getSozlesmeOnayMetni())
+        {
+            throw new KullaniciServiceException(ErrorType.SORUMLULUK_SOZLESME_ONAYI);
+        }
+
+        //Auth Nesnesi Oluşturma
+        Auth auth = Auth.builder()
+                .telefon(dto.getTelefon())
+                .email(dto.getEmail())
+                .sifre(dto.getSifre())
+                .ad(dto.getAd())
+                .soyad(dto.getSoyad())
+                .cinsiyet(dto.getCinsiyet())
+                .dogumTarihi(dto.getDogumTarihi())
+                .build();
+
+        authRepository.save(auth);
+
+        //UserProfile nesnesi olusturma
+        UserProfile userProfile = UserProfile.builder()
+                .ad(dto.getAd())
+                .soyad(dto.getSoyad())
+                .cinsiyet(dto.getCinsiyet())
+                .telefon(dto.getTelefon())
+                .authId(auth.getId())
+                .dogumTarihi(dto.getDogumTarihi())
+                .email(dto.getEmail())
+                .build();
+
+
+        userProfileService.save(userProfile);
+        //Sepet nesnesi olusturma ve sepet id alma
+
+        Object sepetId = rabbitTemplate.convertSendAndReceive("direct.exchange", "key.savesepet", userProfile.getId());
+
+
+        userProfile.setSepetId((Long) sepetId);
+        userProfileService.save(userProfile);
+        return "Kayıt Tamamlandı";
+
+
+    }
+}

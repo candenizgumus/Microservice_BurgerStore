@@ -1,4 +1,4 @@
-package org.example.exceptions;
+package org.minab.exceptions;
 
 // Bu sınıf tüm controller sınıfları için merkezi bir şekilde hata yönetimi sağlayacaktır.
 

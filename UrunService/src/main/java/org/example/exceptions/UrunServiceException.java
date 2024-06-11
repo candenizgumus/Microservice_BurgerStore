@@ -1,4 +1,4 @@
-package org.example.exceptions;
+package org.minab.exceptions;
 
 import lombok.Getter;
 
