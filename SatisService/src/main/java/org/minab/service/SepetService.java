@@ -1,6 +1,8 @@
 package org.minab.service;
 
 import org.example.config.model.HamburgerModel;
+import org.minab.dto.response.SepetDetayGoruntuleResponse;
+import org.minab.dto.response.SepetGoruntuleResponse;
 import org.minab.entity.Sepet;
 import org.minab.entity.SepetDetay;
 import org.minab.entity.enums.*;
@@ -118,7 +120,7 @@ public class SepetService {
         return ekstraFiyatFarki;
     }
 
-    public Sepet sepetiGoruntule(Long sepetId)
+    public SepetGoruntuleResponse sepetiGoruntule(Long sepetId)
     {
         Sepet sepet = sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
         List<SepetDetay> sepetDetayList = sepetDetayService.findAllBySepetId(sepetId);
@@ -127,7 +129,37 @@ public class SepetService {
         sepetDetayList.forEach(sepetDetay -> sepet.setAraToplam(sepetDetay.getToplamFiyat()+sepet.getAraToplam()));
         sepet.setVergi(sepet.getAraToplam()*0.2);
         sepet.setToplam(sepet.getAraToplam()+sepet.getVergi());
-        return sepet;
+
+
+        //Aciklamaları dtoya çevirme
+
+        List<SepetDetayGoruntuleResponse> sepetDetayGoruntuleResponseList = new ArrayList<>();
+        for (SepetDetay sepetDetay : sepetDetayList)
+        {
+            SepetDetayGoruntuleResponse saved = SepetDetayGoruntuleResponse
+                    .builder()
+                    .urunFiyati(sepetDetay.getUrunFiyati())
+                    .aciklamalar(sepetDetay.getAciklamalar())
+                    .toplamFiyat(sepetDetay.getToplamFiyat())
+                    .adet(sepetDetay.getAdet())
+                    .urunAdi(sepetDetay.getUrunAdi())
+                    .build();
+
+            sepetDetayGoruntuleResponseList.add(saved);
+        }
+
+        //Sepeti Dtoya çevirme
+        SepetGoruntuleResponse sepetGoruntuleResponse = SepetGoruntuleResponse.builder()
+                .sepetId(sepet.getId())
+                .userProfileId(sepet.getUserProfileId())
+                .araToplam(sepet.getAraToplam())
+                .vergi(sepet.getVergi())
+                .toplam(sepet.getToplam())
+                .sepetDetayGoruntuleResponse(sepetDetayGoruntuleResponseList)
+                .odemeTipi(sepet.getOdemeTipi().name())
+                .servisTipi(sepet.getServisTipi().name())
+                .build();
+        return sepetGoruntuleResponse;
 
     }
 

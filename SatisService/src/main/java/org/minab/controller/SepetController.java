@@ -1,5 +1,6 @@
 package org.minab.controller;
 
+import org.minab.dto.response.SepetGoruntuleResponse;
 import org.minab.entity.Sepet;
 import org.minab.entity.enums.*;
 import org.minab.service.SepetService;
@@ -23,7 +24,7 @@ public class SepetController {
     }
 
     @GetMapping(EndPoints.SEPETIMIGORUNTULE)
-    public ResponseEntity<Sepet> sepetiGoruntule(@RequestParam Long sepetId)
+    public ResponseEntity<SepetGoruntuleResponse> sepetiGoruntule(@RequestParam Long sepetId)
     {
         return ResponseEntity.ok(sepetService.sepetiGoruntule(sepetId));
     }
