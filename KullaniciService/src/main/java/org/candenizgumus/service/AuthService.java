@@ -87,7 +87,7 @@ public class AuthService
     }
 
     public String activateCode(ActivateCodeRequestDto dto) {
-        Auth auth = authRepository.findById(dto.getId())
+        Auth auth = authRepository.findByEmail(dto.getEmail())
                 .orElseThrow(() -> new KullaniciServiceException(ErrorType.USER_NOT_FOUND));
         if (!auth.getActivationCode().equals(dto.getActivationCode())) {
             throw new KullaniciServiceException(ErrorType.ACTIVATIONCODE_WRONG);

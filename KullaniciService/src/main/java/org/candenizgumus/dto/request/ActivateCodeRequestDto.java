@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @Data
 public class ActivateCodeRequestDto {
-    Long id;
+    String email;
     String activationCode;
 
 
