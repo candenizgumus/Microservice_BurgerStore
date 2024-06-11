@@ -19,7 +19,7 @@ public class AuthRegisterRequest
     String ad;
     String soyad;
     @NotNull
-    @Email
+    @Email //TODO BURAYA BAKIALCAK EMAİL SORUNU
     String email;
     @NotNull
     String telefon;
