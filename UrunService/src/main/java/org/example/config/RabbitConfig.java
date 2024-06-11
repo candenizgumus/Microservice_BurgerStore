@@ -1,4 +1,4 @@
-package com.minab.config;
+package org.example.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

@@ -20,8 +20,11 @@ public class Hamburger
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    String ad;
+    String aciklama;
+    Double birimFiyat;
 
-    private String ad;
+    /*private String ad;
     @ElementCollection(targetClass = ECikartilacakUrunMalzemeleri.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<ECikartilacakUrunMalzemeleri> cikartilacakMalzemeler;
@@ -62,5 +65,5 @@ public class Hamburger
 
         }
         toplamFiyat = toplam;
-    }
+    }*/
 }

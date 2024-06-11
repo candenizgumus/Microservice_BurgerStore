@@ -20,9 +20,9 @@ public class SepetController {
     private final SepetService sepetService;
 
     @PostMapping(SAVE)
-    public ResponseEntity<String> sepeteHamburgerEkle(@RequestParam Set<ECikartilacakUrunMalzemeleri> cikarilacakMalzemeler, @RequestParam Set<EExtraMalzeme> ekstraMalzemeler, @RequestParam EPismeDerecesi pismeDerecesi, @RequestParam Set<ESos> soslar, @RequestParam Double hamburgerBirimFiyati, @RequestParam String ad)
+    public ResponseEntity<String> sepeteHamburgerEkle(@RequestParam Long sepetId,@RequestParam Long hamburgerId, Integer adet,@RequestParam Set<ECikartilacakUrunMalzemeleri> cikarilacakMalzemeler, @RequestParam Set<EExtraMalzeme> ekstraMalzemeler, @RequestParam EPismeDerecesi pismeDerecesi, @RequestParam Set<ESos> soslar)
     {
-        return ResponseEntity.ok(sepetService.save(cikarilacakMalzemeler, ekstraMalzemeler, pismeDerecesi,soslar, hamburgerBirimFiyati, ad));
+        return ResponseEntity.ok(sepetService.sepeteHamburgerEkle( sepetId,hamburgerId, adet, cikarilacakMalzemeler, ekstraMalzemeler, pismeDerecesi, soslar));
     }
 
 }
