@@ -19,7 +19,7 @@ import java.util.Set;
 public class SepetController {
     private final SepetService sepetService;
 
-    @PostMapping(EndPoints.SAVE)
+    @PostMapping(EndPoints.SEPETEHAMBURGEREKLE)
     public ResponseEntity<String> sepeteHamburgerEkle(@RequestParam Long sepetId,@RequestParam Long hamburgerId, Integer adet,@RequestParam Set<ECikartilacakUrunMalzemeleri> cikarilacakMalzemeler, @RequestParam Set<EExtraMalzeme> ekstraMalzemeler, @RequestParam EPismeDerecesi pismeDerecesi, @RequestParam Set<ESos> soslar)
     {
         return ResponseEntity.ok(sepetService.sepeteHamburgerEkle( sepetId,hamburgerId, adet, cikarilacakMalzemeler, ekstraMalzemeler, pismeDerecesi, soslar));
@@ -29,6 +29,12 @@ public class SepetController {
     public ResponseEntity<Sepet> sepetiGoruntule(@RequestParam Long sepetId)
     {
         return ResponseEntity.ok(sepetService.sepetiGoruntule(sepetId));
+    }
+
+    @DeleteMapping(EndPoints.SEPETITEMIZLE)
+    public ResponseEntity<Sepet> sepetiTemizle(@RequestParam Long sepetId)
+    {
+        return ResponseEntity.ok(sepetService.sepetiTemizle(sepetId));
     }
 
 }

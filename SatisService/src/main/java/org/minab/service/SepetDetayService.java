@@ -25,4 +25,9 @@ public class SepetDetayService
     {
         return sepetDetayRepository.findAllBySepetId(sepetId);
     }
+
+    public void deleteById(Long sepetDetayId)
+    {
+        sepetDetayRepository.deleteById(sepetDetayId);
+    }
 }

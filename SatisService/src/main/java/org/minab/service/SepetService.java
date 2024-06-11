@@ -106,4 +106,11 @@ public class SepetService {
         return sepet;
 
     }
+
+    public Sepet sepetiTemizle(Long sepetId)
+    {
+        List<SepetDetay> sepetDetayList = sepetDetayService.findAllBySepetId(sepetId);
+        sepetDetayList.forEach(sepetDetay -> sepetDetayService.deleteById(sepetDetay.getId()));
+        return sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
+    }
 }

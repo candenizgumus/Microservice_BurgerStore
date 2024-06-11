@@ -27,4 +27,6 @@ public class EndPoints
 
 
     public static final String SEPETIMIGORUNTULE = "/sepetimigoruntule";
+    public static final String SEPETITEMIZLE =  "/sepetitemizle";
+    public static final String SEPETEHAMBURGEREKLE =    "/sepetehamburgerekle";
 }
