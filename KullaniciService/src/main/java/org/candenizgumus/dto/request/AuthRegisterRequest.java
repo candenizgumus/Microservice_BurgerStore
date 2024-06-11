@@ -1,5 +1,6 @@
 package org.candenizgumus.dto.request;
 
+import jakarta.validation.constraints.Email;
 import org.candenizgumus.entity.enums.ECinsiyet;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class AuthRegisterRequest
     String ad;
     String soyad;
     @NotNull
+    @Email
     String email;
     @NotNull
     String telefon;
