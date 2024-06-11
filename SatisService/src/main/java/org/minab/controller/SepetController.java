@@ -1,10 +1,7 @@
 package org.minab.controller;
 
 import org.minab.entity.Sepet;
-import org.minab.entity.enums.ECikartilacakUrunMalzemeleri;
-import org.minab.entity.enums.EExtraMalzeme;
-import org.minab.entity.enums.EPismeDerecesi;
-import org.minab.entity.enums.ESos;
+import org.minab.entity.enums.*;
 import org.minab.service.SepetService;
 import lombok.RequiredArgsConstructor;
 import org.minab.constants.EndPoints;
@@ -37,4 +34,11 @@ public class SepetController {
         return ResponseEntity.ok(sepetService.sepetiTemizle(sepetId));
     }
 
+    @PostMapping("/sepeteIcecekEkle")
+    public ResponseEntity<String> sepeteIcecekEkle(@RequestParam Long sepetId, @RequestParam EIcecek icecek, @RequestParam Integer adet) {
+        String result = sepetService.sepeteIcecekEkle(sepetId, icecek, adet);
+        return ResponseEntity.ok(result);
+    }
 }
+
+

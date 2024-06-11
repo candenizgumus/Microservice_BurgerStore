@@ -3,10 +3,7 @@ package org.minab.service;
 import org.example.config.model.HamburgerModel;
 import org.minab.entity.Sepet;
 import org.minab.entity.SepetDetay;
-import org.minab.entity.enums.ECikartilacakUrunMalzemeleri;
-import org.minab.entity.enums.EExtraMalzeme;
-import org.minab.entity.enums.EPismeDerecesi;
-import org.minab.entity.enums.ESos;
+import org.minab.entity.enums.*;
 import org.minab.exceptions.ErrorType;
 import org.minab.exceptions.SatisServiceException;
 import org.minab.repository.SepetRepository;
@@ -16,6 +13,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -71,6 +69,32 @@ public class SepetService {
         return "Hamburger sepete eklendi";
 
     }
+
+    public String sepeteIcecekEkle(Long sepetId, EIcecek icecek, Integer adet) {
+        // Sepeti bulma ve kontrol
+        Sepet sepet = sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
+
+        // Icecek fiyatını al
+        double fiyat = icecek.getFiyat();
+
+        // Icecek adını al
+        String icecekAdi = icecek.name().replaceAll("_", " ");
+
+        // Sepet detayı oluşturma
+        SepetDetay sepetDetay = SepetDetay.builder()
+                .urunAdi(icecekAdi)
+                .urunFiyati(fiyat)
+                .adet(adet)
+                .sepetId(sepet.getId())
+                .build();
+
+        // Sepet detayını kaydetme
+        sepetDetayService.save(sepetDetay);
+
+        return icecekAdi + " sepete eklendi";
+    }
+
+
 
     private Double sosFiyatFarkiHesaplama(Set<EExtraMalzeme> ekstraMalzemeler, Set<ESos> soslar)
     {
