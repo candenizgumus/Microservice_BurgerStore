@@ -22,7 +22,7 @@ allprojects {
 
 //subprojects: Sadece alttaki modüllerden bahsediyoruz.
 subprojects {
-    group = 'com.candenizgumus'
+    group = 'org.candenizgumus'
     version = 'v0.0.1'
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17

@@ -1,4 +1,4 @@
-package com.candenizgumus.rabbitmq.model;
+package org.candenizgumus.rabbitmq.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

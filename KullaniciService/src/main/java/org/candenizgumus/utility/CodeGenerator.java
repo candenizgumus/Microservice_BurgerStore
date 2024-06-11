@@ -1,4 +1,4 @@
-package com.candenizgumus.utility;
+package org.candenizgumus.utility;
 
 
 import java.util.UUID;

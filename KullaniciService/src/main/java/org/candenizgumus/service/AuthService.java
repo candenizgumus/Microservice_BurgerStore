@@ -1,17 +1,18 @@
-package com.candenizgumus.service;
+package org.candenizgumus.service;
 
-import com.candenizgumus.dto.request.ActivateCodeRequestDto;
-import com.candenizgumus.dto.request.AuthRegisterRequest;
-import com.candenizgumus.entity.Auth;
-import com.candenizgumus.entity.UserProfile;
-import com.candenizgumus.entity.enums.EStatus;
-import com.candenizgumus.exceptions.ErrorType;
-import com.candenizgumus.exceptions.KullaniciServiceException;
-import com.candenizgumus.rabbitmq.model.ActivationMailModel;
-import com.candenizgumus.rabbitmq.producer.ActivationMailProducer;
-import com.candenizgumus.repository.AuthRepository;
-import com.candenizgumus.utility.CodeGenerator;
+import org.candenizgumus.dto.request.ActivateCodeRequestDto;
+import org.candenizgumus.dto.request.AuthRegisterRequest;
+import org.candenizgumus.entity.Auth;
+import org.candenizgumus.entity.UserProfile;
+import org.candenizgumus.entity.enums.EStatus;
+import org.candenizgumus.exceptions.ErrorType;
+import org.candenizgumus.exceptions.KullaniciServiceException;
+import org.candenizgumus.rabbitmq.model.ActivationMailModel;
+import org.candenizgumus.rabbitmq.producer.ActivationMailProducer;
+import org.candenizgumus.repository.AuthRepository;
+import org.candenizgumus.utility.CodeGenerator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -21,6 +22,7 @@ public class AuthService
     private final AuthRepository authRepository;
     private final UserProfileService userProfileService;
     private final ActivationMailProducer activationMailProducer;
+    private final RabbitTemplate rabbitTemplate;
 
     public String save(AuthRegisterRequest dto)
     {
@@ -73,8 +75,14 @@ public class AuthService
 
         userProfileService.save(userProfile);
 
-        return "Kayıt Tamamlandı";
+        //Sepet nesnesi olusturma ve sepet id alma
 
+        Object sepetId = rabbitTemplate.convertSendAndReceive("direct.exchange", "key.savesepet", userProfile.getId());
+
+
+        userProfile.setSepetId((Long) sepetId);
+        userProfileService.save(userProfile);
+        return "Kayıt Tamamlandı";
 
     }
 

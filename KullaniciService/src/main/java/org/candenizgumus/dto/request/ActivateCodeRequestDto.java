@@ -1,4 +1,4 @@
-package com.candenizgumus.dto.request;
+package org.candenizgumus.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,21 +1,25 @@
-package com.candenizgumus.controller;
+package org.candenizgumus.controller;
 
-import com.candenizgumus.dto.request.ActivateCodeRequestDto;
-import com.candenizgumus.dto.request.AuthRegisterRequest;
-import com.candenizgumus.service.AuthService;
+
+
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.candenizgumus.dto.request.ActivateCodeRequestDto;
+import org.candenizgumus.dto.request.AuthRegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.candenizgumus.constants.EndPoints.*;
+
+import static org.candenizgumus.constants.EndPoints.*;
+
 
 @RequiredArgsConstructor
 @RequestMapping(AUTH)
 @RestController
 public class AuthController
 {
-    private final AuthService authService;
+    private final org.candenizgumus.service.AuthService authService;
 
     @PostMapping(REGISTER)
     public ResponseEntity<String> register(@RequestBody @Valid AuthRegisterRequest dto)
