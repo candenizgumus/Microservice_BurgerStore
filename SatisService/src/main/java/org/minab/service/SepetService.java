@@ -107,10 +107,14 @@ public class SepetService {
 
     }
 
-    public Sepet sepetiTemizle(Long sepetId)
+    public String sepetiTemizle(Long sepetId)
     {
         List<SepetDetay> sepetDetayList = sepetDetayService.findAllBySepetId(sepetId);
+        if (sepetDetayList.isEmpty())
+        {
+            throw new SatisServiceException(ErrorType.SEPET_EMPTY);
+        }
         sepetDetayList.forEach(sepetDetay -> sepetDetayService.deleteById(sepetDetay.getId()));
-        return sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
+        return "Sepet temizlendi";
     }
 }

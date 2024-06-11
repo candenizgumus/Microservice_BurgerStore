@@ -26,7 +26,8 @@ public enum ErrorType
     SIFRELER_AYNI_DEGIL(1015,"Sifreler ayni degil" ,HttpStatus.BAD_REQUEST ),
     SORUMLULUK_SOZLESME_ONAYI(1016, "Sorumluluk sozlesme onayi verilmedi",  HttpStatus.BAD_REQUEST ),
     SEPET_NOT_FOUND(1017,   "Sepet bulunamadı." ,   HttpStatus.BAD_REQUEST),
-    SEPET_DETAY_NOT_FOUND(1018, "Sepet detay bulunamadı." , HttpStatus.BAD_REQUEST), ;
+    SEPET_DETAY_NOT_FOUND(1018, "Sepet detay bulunamadı." , HttpStatus.BAD_REQUEST),
+    SEPET_EMPTY(        1019,   "Sepet bos." ,     HttpStatus.BAD_REQUEST),;
     private Integer code;
     private String message;
     private HttpStatus httpStatus;
