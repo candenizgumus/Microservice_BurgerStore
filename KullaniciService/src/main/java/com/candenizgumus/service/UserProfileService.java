@@ -23,4 +23,10 @@ public class UserProfileService
     {
         return userProfileRepository.findById(userId).orElseThrow(() -> new KullaniciServiceException(ErrorType.USER_NOT_FOUND));
     }
+    public UserProfile findByAuthId(Long authId)
+    {
+        return userProfileRepository.findByAuthId(authId).orElseThrow(() -> new KullaniciServiceException(ErrorType.USER_NOT_FOUND));
+    }
+
+
 }

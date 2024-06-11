@@ -1,0 +1,6 @@
+dependencies {
+    implementation libs.springEmail
+    implementation libs.springCloudClient
+    implementation libs.rabbitMQ
+
+}

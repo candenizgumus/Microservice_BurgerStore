@@ -30,7 +30,7 @@ public class Auth
     LocalDateTime updateAt;
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    EStatus status = EStatus.ACTIVE;
+    EStatus status = EStatus.PENDING;
 
 
     String ad;
@@ -43,4 +43,6 @@ public class Auth
     LocalDate dogumTarihi;
     @Enumerated(EnumType.STRING)
     ECinsiyet cinsiyet;
+    String activationCode;
+
 }

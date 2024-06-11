@@ -31,7 +31,7 @@ public class UserProfile
     LocalDateTime updateAt;
     @Builder.Default
     @Enumerated(EnumType.STRING)
-    EStatus status = EStatus.ACTIVE;
+    EStatus status = EStatus.PENDING;
 
     Long authId;
     String ad;
