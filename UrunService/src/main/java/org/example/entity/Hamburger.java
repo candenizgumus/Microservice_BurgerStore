@@ -1,16 +1,9 @@
 package org.example.entity;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.entity.enums.ECikartilacakUrunMalzemeleri;
-import org.example.entity.enums.EExtraMalzeme;
-import org.example.entity.enums.EPismeDerecesi;
-import org.example.entity.enums.ESos;
-
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +16,11 @@ public class Hamburger
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    String ad;
+    String aciklama;
+    Double birimFiyat;
 
-    private String ad;
+    /*private String ad;
     @ElementCollection(targetClass = ECikartilacakUrunMalzemeleri.class, fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<ECikartilacakUrunMalzemeleri> cikartilacakMalzemeler;
@@ -44,6 +40,7 @@ public class Hamburger
     private Double toplamFiyat;
 
 
+    //TODO HER KULLANICIYA SEPET VER, SEPETDETAYINDA BAĞLANTI KURMA.
     @PrePersist
     public void setToplamFiyat()
     {
@@ -64,5 +61,5 @@ public class Hamburger
 
         }
         toplamFiyat = toplam;
-    }
+    }*/
 }

@@ -4,17 +4,17 @@ import lombok.Getter;
 
 
 @Getter
-public class UrunServiceException extends RuntimeException
+public class SatisServiceException extends RuntimeException
 {
     private ErrorType errorType;
 
-    public UrunServiceException(ErrorType errorType)
+    public SatisServiceException(ErrorType errorType)
     {
         super(errorType.getMessage());
         this.errorType = errorType;
     }
 
-    public UrunServiceException(ErrorType errorType, String customMessage)
+    public SatisServiceException(ErrorType errorType, String customMessage)
     {
         super(customMessage);
         this.errorType = errorType;

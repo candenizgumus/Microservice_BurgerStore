@@ -1,11 +1,12 @@
-package org.example.constants;
+package org.candenizgumus.constants;
+
 public class EndPoints
 {
 
 
-    public static final String URUN = "/urun";
-    public static final String HAMBURGER = "/hamburger";
-
+    public static final String AUTH = "/auth";
+    public static final String USERPROFILE = "/userprofile";
+    public static final String ADRES = "/adres";
 
 
 

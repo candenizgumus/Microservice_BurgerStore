@@ -1,4 +1,4 @@
-package org.minab.exceptions;
+package org.candenizgumus.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

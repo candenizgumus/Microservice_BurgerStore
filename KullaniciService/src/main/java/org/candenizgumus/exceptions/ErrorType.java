@@ -1,4 +1,4 @@
-package org.minab.exceptions;
+package org.candenizgumus.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +26,9 @@ public enum ErrorType
     SIFRELER_AYNI_DEGIL(1015, "Sifreler ayni degil", HttpStatus.BAD_REQUEST),
     SORUMLULUK_SOZLESME_ONAYI(1016, "Sorumluluk sozlesme onayi verilmedi", HttpStatus.BAD_REQUEST),
     USER_NOT_FOUND(1017, "User bulunamadı.", HttpStatus.BAD_REQUEST),
-    HAMBURGER_NOT_FOUND(1018,   "Hamburger bulunamadı." ,   HttpStatus.BAD_REQUEST);
+    INTERNAL_SERVER_ERROR(1018, "Aktivasyon işlemleri yapılamıyor. Server Hatası.", HttpStatus.INTERNAL_SERVER_ERROR),
+    ACCOUNT_ALREADY_ACTIVE(1019,"Hesabınız zaten aktif durumda.",HttpStatus.BAD_REQUEST),
+    ACCOUNT_DELETED(1020, "Hesabınız silinmiş. Aktivasyon işlemi gerçekleştirilemez", HttpStatus.BAD_REQUEST);
     private Integer code;
     private String message;
     private HttpStatus httpStatus;

@@ -1,10 +1,11 @@
-package org.example.constants;
+package org.minab.constants;
+
 public class EndPoints
 {
 
 
-    public static final String URUN = "/urun";
-    public static final String HAMBURGER = "/hamburger";
+    public static final String SEPET = "/sepet";
+    public static final String SIPARIS = "/siparis";
 
 
 
@@ -25,4 +26,5 @@ public class EndPoints
     public static final String ACTIVATION    = "/activation";
 
 
+    public static final String SEPETIMIGORUNTULE = "/sepetimigoruntule";
 }

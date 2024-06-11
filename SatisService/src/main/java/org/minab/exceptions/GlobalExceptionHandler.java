@@ -23,8 +23,8 @@ public class GlobalExceptionHandler
     }
 
 
-    @ExceptionHandler(UrunServiceException.class)
-    public ResponseEntity<ErrorMessage> handleDemoException(UrunServiceException ex)
+    @ExceptionHandler(SatisServiceException.class)
+    public ResponseEntity<ErrorMessage> handleDemoException(SatisServiceException ex)
     {
         ErrorType errorType = ex.getErrorType();
         return new ResponseEntity(createErrorMessage(ex,

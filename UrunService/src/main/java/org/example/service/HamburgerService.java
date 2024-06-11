@@ -1,36 +1,35 @@
 package org.example.service;
-
 import lombok.RequiredArgsConstructor;
-import org.example.entity.Hamburger;
-import org.example.entity.enums.ECikartilacakUrunMalzemeleri;
-import org.example.entity.enums.EExtraMalzeme;
-import org.example.entity.enums.EPismeDerecesi;
-import org.example.entity.enums.ESos;
-import org.example.repository.HamburgerRepository;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import org.example.config.model.HamburgerModel;
+import org.example.dto.request.HamburgerSaveRequest;
+import org.example.entity.Hamburger;
+import org.example.repository.HamburgerRepository;
+
+import org.minab.exceptions.ErrorType;
+import org.minab.exceptions.UrunServiceException;
+
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
 public class HamburgerService
 {
-    private final HamburgerRepository  hamburgerRepository;
+    private final HamburgerRepository hamburgerRepository;
 
-    public String save(Set<ECikartilacakUrunMalzemeleri> malzemeler, Set<EExtraMalzeme> ekstraMalzemeler, EPismeDerecesi pismeDerecesi, Set<ESos> soslar , Double hamburgerBirimFiyati, String ad)
+
+    public String save(HamburgerSaveRequest dto)
     {
-        Hamburger hamburger = new Hamburger();
-        hamburger.setAd(ad);
-        hamburger.setCikartilacakMalzemeler(malzemeler);
-        hamburger.setEkstraMalzemeler(ekstraMalzemeler);
-        hamburger.setPismeDerecesi(pismeDerecesi);
-        hamburger.setSoslar(soslar);
-        hamburger.setHamburgerBirimFiyati(hamburgerBirimFiyati);
-        hamburger.setToplamFiyat();
-        hamburgerRepository.save(hamburger);
+        hamburgerRepository.save(Hamburger.builder().ad(dto.getAd()).aciklama(dto.getAciklama()).birimFiyat(dto.getBirimFiyat()).build());
+        return "Hamburger kaydedildi.";
+    }
 
-
-        return "Hamburger Kaydedildi.";
+    @RabbitListener(queues = "findhamburger")
+    public HamburgerModel find(Long hamburgerId)
+    {
+        Hamburger hamburger = hamburgerRepository.findById(hamburgerId).orElseThrow(() -> new UrunServiceException(ErrorType.HAMBURGER_NOT_FOUND));
+        HamburgerModel hamburgerModel = HamburgerModel.builder().id(hamburger.getId()).ad(hamburger.getAd()).aciklama(hamburger.getAciklama()).birimFiyat(hamburger.getBirimFiyat()).build();
+        return hamburgerModel;
     }
 }

@@ -1,4 +1,4 @@
-package org.minab.exceptions;
+package org.candenizgumus.exceptions;
 
 // Bu sınıf tüm controller sınıfları için merkezi bir şekilde hata yönetimi sağlayacaktır.
 
@@ -23,8 +23,8 @@ public class GlobalExceptionHandler
     }
 
 
-    @ExceptionHandler(UrunServiceException.class)
-    public ResponseEntity<ErrorMessage> handleDemoException(UrunServiceException ex)
+    @ExceptionHandler(KullaniciServiceException.class)
+    public ResponseEntity<ErrorMessage> handleDemoException(KullaniciServiceException ex)
     {
         ErrorType errorType = ex.getErrorType();
         return new ResponseEntity(createErrorMessage(ex,
