@@ -96,6 +96,49 @@ public class SepetService {
         return icecekAdi + " sepete eklendi";
     }
 
+    public String sepeteTatliEkle(Long sepetId, ETatli tatli, Integer adet) {
+        // Sepeti bulma ve kontrol
+        Sepet sepet = sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
+
+        // Tatlı fiyatını al
+        double fiyat = tatli.getFiyat();
+
+        // Sepet detayı oluşturma
+        SepetDetay sepetDetay = SepetDetay.builder()
+                .urunAdi(tatli.name())
+                .urunFiyati(fiyat)
+                .adet(adet)
+                .sepetId(sepet.getId())
+                .build();
+
+        // Sepet detayını kaydetme
+        sepetDetayService.save(sepetDetay);
+
+        return tatli.name() + " sepete eklendi";
+    }
+
+    public String sepeteAtistirmalikEkle(Long sepetId, EAtistirmalik atistirmalik, Integer adet) {
+        // Sepeti bulma ve kontrol
+        Sepet sepet = sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
+
+        double fiyat = atistirmalik.getFiyat();
+
+        String atistirmalikAdi = atistirmalik.name().replaceAll("_", " ");
+
+        // Sepet detayı oluşturma
+        SepetDetay sepetDetay = SepetDetay.builder()
+                .urunAdi(atistirmalikAdi)
+                .urunFiyati(fiyat)
+                .adet(adet)
+                .sepetId(sepet.getId())
+                .build();
+
+        // Sepet detayını kaydetme
+        sepetDetayService.save(sepetDetay);
+
+        return atistirmalikAdi + " sepete eklendi";
+    }
+
 
 
     private Double sosFiyatFarkiHesaplama(Set<EExtraMalzeme> ekstraMalzemeler, Set<ESos> soslar)

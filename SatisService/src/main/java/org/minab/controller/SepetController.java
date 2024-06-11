@@ -37,8 +37,18 @@ public class SepetController {
 
     @PostMapping("/sepeteIcecekEkle")
     public ResponseEntity<String> sepeteIcecekEkle(@RequestParam Long sepetId, @RequestParam EIcecek icecek, @RequestParam Integer adet) {
-        String result = sepetService.sepeteIcecekEkle(sepetId, icecek, adet);
-        return ResponseEntity.ok(result);
+
+        return ResponseEntity.ok(sepetService.sepeteIcecekEkle(sepetId, icecek, adet));
+    }
+
+    @PostMapping("/sepeteTatliEkle")
+    public ResponseEntity<String> sepeteTatliEkle(@RequestParam Long sepetId, @RequestParam ETatli tatli, @RequestParam Integer adet) {
+        return ResponseEntity.ok(sepetService.sepeteTatliEkle(sepetId, tatli, adet));
+    }
+
+    @PostMapping("/sepeteAtistirmalikEkle")
+    public ResponseEntity<String> sepeteAtistirmalikEkle(@RequestParam Long sepetId, @RequestParam EAtistirmalik atistirmalik, @RequestParam Integer adet) {
+        return ResponseEntity.ok(sepetService.sepeteAtistirmalikEkle(sepetId, atistirmalik, adet));
     }
 }
 

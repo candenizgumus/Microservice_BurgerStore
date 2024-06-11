@@ -23,11 +23,13 @@ public class SepetDetayService
 
     public List<SepetDetay> findAllBySepetId(Long sepetId)
     {
+
         return sepetDetayRepository.findAllBySepetId(sepetId);
     }
 
     public void deleteById(Long sepetDetayId)
     {
+
         sepetDetayRepository.deleteById(sepetDetayId);
     }
 }
