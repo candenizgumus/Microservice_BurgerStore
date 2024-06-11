@@ -1,6 +1,6 @@
 package org.minab.service;
 
-import org.example.model.HamburgerModel;
+import org.example.config.model.HamburgerModel;
 import org.minab.entity.Sepet;
 import org.minab.entity.SepetDetay;
 import org.minab.entity.enums.ECikartilacakUrunMalzemeleri;
