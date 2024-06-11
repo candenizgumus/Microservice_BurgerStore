@@ -33,6 +33,7 @@ public class Auth
     EStatus status = EStatus.PENDING;
 
 
+
     String ad;
     String soyad;
     @Column(unique = true)
