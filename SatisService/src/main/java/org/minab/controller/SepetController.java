@@ -37,13 +37,13 @@ public class SepetController {
 
     @PostMapping("/sepeteIcecekEkle")
     public ResponseEntity<String> sepeteIcecekEkle(@RequestParam Long sepetId, @RequestParam EIcecek icecek, @RequestParam Integer adet) {
-
         return ResponseEntity.ok(sepetService.sepeteIcecekEkle(sepetId, icecek, adet));
     }
 
     @PostMapping("/sepeteTatliEkle")
     public ResponseEntity<String> sepeteTatliEkle(@RequestParam Long sepetId, @RequestParam ETatli tatli, @RequestParam Integer adet) {
         return ResponseEntity.ok(sepetService.sepeteTatliEkle(sepetId, tatli, adet));
+
     }
 
     @PostMapping("/sepeteAtistirmalikEkle")

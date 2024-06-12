@@ -2,6 +2,8 @@ package org.candenizgumus.service;
 
 import org.candenizgumus.dto.request.ActivateCodeRequestDto;
 import org.candenizgumus.dto.request.AuthRegisterRequest;
+import org.candenizgumus.dto.request.LoginRequestDto;
+import org.candenizgumus.dto.request.UpdatePasswordRequestDto;
 import org.candenizgumus.entity.Auth;
 import org.candenizgumus.entity.UserProfile;
 import org.candenizgumus.entity.enums.EStatus;
@@ -12,6 +14,7 @@ import org.candenizgumus.rabbitmq.producer.ActivationMailProducer;
 import org.candenizgumus.repository.AuthRepository;
 import org.candenizgumus.utility.CodeGenerator;
 import lombok.RequiredArgsConstructor;
+import org.candenizgumus.utility.JwtTokenManager;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,7 @@ public class AuthService
     private final UserProfileService userProfileService;
     private final ActivationMailProducer activationMailProducer;
     private final RabbitTemplate rabbitTemplate;
+    private final JwtTokenManager jwtTokenManager;
 
     public String save(AuthRegisterRequest dto)
     {
@@ -120,5 +124,41 @@ public class AuthService
     public List<Auth> findAll()
     {
         return authRepository.findAll();
+    }
+
+    public String doLogin(LoginRequestDto dto) {
+        Auth auth = authRepository.findOptionalByEmailAndSifre(dto.getEmail(),
+                        dto.getSifre())
+                .orElseThrow(() -> new KullaniciServiceException(ErrorType.EMAIL_OR_PASSWORD_WRONG));
+
+        if (!auth.getStatus().equals(EStatus.ACTIVE)) {
+            throw new KullaniciServiceException(ErrorType.ACCOUNT_NOT_ACTIVE);
+        }
+
+        return jwtTokenManager.createToken(auth.getId(),auth.getRole())
+                .orElseThrow(()->new KullaniciServiceException(ErrorType.TOKEN_CREATION_FAILED));
+
+    }
+
+    public String sifremiUnuttum(String email){
+        String resetPasswordCode = CodeGenerator.generateResetPasswordCode();
+        ActivationMailModel mailModel = ActivationMailModel.builder()
+                .activationCode(resetPasswordCode)
+                .email(email)
+                .build();
+        rabbitTemplate.convertAndSend("direct.exchange", "reset.password.email.key", mailModel);
+        Auth auth = authRepository.findByEmail(email).orElseThrow(() -> new KullaniciServiceException(ErrorType.USER_NOT_FOUND));
+        auth.setPasswordResetCode(mailModel.getActivationCode());
+        authRepository.save(auth);
+
+        return "Şifre değiştirme kodunuz "+ email + "adresine gönderildi.";
+    }
+
+    public String updatePassword(UpdatePasswordRequestDto dto) {
+        Auth auth = authRepository.findByEmailAndPasswordResetCode(dto.getEmail(), dto.getPasswordResetCode())
+                .orElseThrow(() -> new KullaniciServiceException(ErrorType.USER_NOT_FOUND));
+        auth.setSifre(dto.getNewPassword());
+        authRepository.save(auth);
+        return "Şifreniz başarı ile değiştirildi.";
     }
 }

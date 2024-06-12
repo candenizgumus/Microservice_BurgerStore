@@ -24,6 +24,8 @@ public class RabbitConfig
     String queueFindUserProfile = "finduserprofileandupdatebalance";
     String keyFindUserProfile = "key.finduserprofileandupdatebalance";
 
+
+
     @Bean
     public DirectExchange directExchangeAuth(){
         return new DirectExchange(directExchangeAuth);
@@ -49,10 +51,12 @@ public class RabbitConfig
     public Binding bindingFindUserProfile(Queue queueFindUserProfile, DirectExchange directExchangeAuth){
         return BindingBuilder.bind(queueFindUserProfile).to(directExchangeAuth).with(keyFindUserProfile);
     }
+
     String activationCodeQueueName="activation.code.queue";
     String activationCodeBindingKey="activation.code.key";
 
-
+    String resetPasswordQueueName="reset.password.queue";
+    String resetPasswordBindingKey="reset.password.email.key";
 
     @Bean
     Queue activationCodeQueue(){
@@ -62,6 +66,16 @@ public class RabbitConfig
     Binding bindingActivationCode(Queue activationCodeQueue, DirectExchange exchangeDirect){
         return BindingBuilder.bind(activationCodeQueue).to(exchangeDirect).with(activationCodeBindingKey);
     }
+
+    @Bean
+    Queue resetPasswordQueue(){
+        return new Queue(resetPasswordQueueName);
+    }
+    @Bean
+    Binding bindingResetPassword(Queue resetPasswordQueue,DirectExchange exchangeDirect){
+        return BindingBuilder.bind(resetPasswordQueue).to(exchangeDirect).with(resetPasswordBindingKey);
+    }
+
     @Bean
     MessageConverter messageConverter(){
         return new Jackson2JsonMessageConverter();

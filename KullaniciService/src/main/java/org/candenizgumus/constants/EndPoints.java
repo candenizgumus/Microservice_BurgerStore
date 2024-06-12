@@ -24,6 +24,8 @@ public class EndPoints
 
     public static final String LOGIN = "/login";
     public static final String ACTIVATION    = "/activation";
+    public static final String SIFREMIUNUTTUM    = "/sifremiunuttum";
+    public static final String UPDATEPASSWORD    = "/updatePasword";
 
 
     public static final String BAKIYEEKLE =     "/bakiyeekle";

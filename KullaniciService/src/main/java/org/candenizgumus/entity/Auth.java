@@ -1,6 +1,7 @@
 package org.candenizgumus.entity;
 
 import org.candenizgumus.entity.enums.ECinsiyet;
+import org.candenizgumus.entity.enums.ERole;
 import org.candenizgumus.entity.enums.EStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -45,5 +46,9 @@ public class Auth
     @Enumerated(EnumType.STRING)
     ECinsiyet cinsiyet;
     String activationCode;
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    ERole role = ERole.USER;
+    String passwordResetCode;
 
 }

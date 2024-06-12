@@ -27,6 +27,7 @@ public class RabbitConfig
     String queueFindUserProfile = "finduserprofileandupdatebalance";
     String keyFindUserProfile = "key.finduserprofileandupdatebalance";
 
+
     @Bean
     public DirectExchange directExchangeAuth(){
         return new DirectExchange(directExchangeAuth);

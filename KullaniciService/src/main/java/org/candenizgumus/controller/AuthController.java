@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.candenizgumus.dto.request.ActivateCodeRequestDto;
 import org.candenizgumus.dto.request.AuthRegisterRequest;
+import org.candenizgumus.dto.request.LoginRequestDto;
+import org.candenizgumus.dto.request.UpdatePasswordRequestDto;
 import org.candenizgumus.entity.Auth;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,4 +43,19 @@ public class AuthController
         return ResponseEntity.ok(authService.findAll());
     }
 
+    @PostMapping(LOGIN)
+    public ResponseEntity<String> dologin(@RequestBody LoginRequestDto dto) {
+        return ResponseEntity.ok(authService.doLogin(dto));
+    }
+
+    @GetMapping(SIFREMIUNUTTUM)
+    public ResponseEntity<String> sifremiUnuttum(@RequestParam String email) {
+        authService.sifremiUnuttum(email);
+        return ResponseEntity.ok("Şifre değiştirme kodunuz "+ email + "adresine gönderildi.Şifrenizi onaylamak için updatePassword bölümüne gidiniz.");
+    }
+
+    @PutMapping(UPDATEPASSWORD)
+    public ResponseEntity<String> updatePassword(@RequestBody UpdatePasswordRequestDto dto) {
+        return ResponseEntity.ok(authService.updatePassword(dto));
+    }
 }

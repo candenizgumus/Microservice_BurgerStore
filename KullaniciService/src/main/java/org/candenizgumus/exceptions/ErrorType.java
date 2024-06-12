@@ -29,7 +29,8 @@ public enum ErrorType
     INTERNAL_SERVER_ERROR(1018, "Aktivasyon işlemleri yapılamıyor. Server Hatası.", HttpStatus.INTERNAL_SERVER_ERROR),
     ACCOUNT_ALREADY_ACTIVE(1019,"Hesabınız zaten aktif durumda.",HttpStatus.BAD_REQUEST),
     ACCOUNT_DELETED(1020, "Hesabınız silinmiş. Aktivasyon işlemi gerçekleştirilemez", HttpStatus.BAD_REQUEST),
-    INSUFFICIENT_BALANCE(1021   ,   "Yetersiz bakiye" , HttpStatus.BAD_REQUEST),;
+    ACCOUNT_NOT_ACTIVE(3005, "Hesabınız aktif değil.", HttpStatus.BAD_REQUEST),
+    EMAIL_OR_PASSWORD_WRONG(1002, "Email veya parola yanlış.", HttpStatus.BAD_REQUEST);
     private Integer code;
     private String message;
     private HttpStatus httpStatus;

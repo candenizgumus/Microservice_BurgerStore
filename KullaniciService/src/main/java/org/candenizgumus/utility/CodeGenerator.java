@@ -18,5 +18,18 @@ public class CodeGenerator {
         return stringBuilder.toString();
     }
 
+    public static String generateResetPasswordCode() {
+        String string = UUID.randomUUID().toString();
+
+        String[] split =string.split("-");
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (String s : split) {
+            stringBuilder.append(s.charAt(0));
+        }
+
+        return stringBuilder.toString();
+    }
+
 
 }
