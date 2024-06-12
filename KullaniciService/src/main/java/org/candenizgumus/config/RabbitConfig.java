@@ -21,6 +21,9 @@ public class RabbitConfig
     String saveBindingKey = "key.savesepet";
 
 
+    String queueFindUserProfile = "finduserprofileandupdatebalance";
+    String keyFindUserProfile = "key.finduserprofileandupdatebalance";
+
     @Bean
     public DirectExchange directExchangeAuth(){
         return new DirectExchange(directExchangeAuth);
@@ -33,10 +36,19 @@ public class RabbitConfig
     }
 
     @Bean
+    public Queue queueFindUserProfile(){
+        return new Queue(queueFindUserProfile);
+    }
+
+    @Bean
     public Binding bindingSaveDirectExchange(Queue queueSaveSepet, DirectExchange directExchangeAuth){
         return BindingBuilder.bind(queueSaveSepet).to(directExchangeAuth).with(saveBindingKey);
     }
 
+    @Bean
+    public Binding bindingFindUserProfile(Queue queueFindUserProfile, DirectExchange directExchangeAuth){
+        return BindingBuilder.bind(queueFindUserProfile).to(directExchangeAuth).with(keyFindUserProfile);
+    }
     String activationCodeQueueName="activation.code.queue";
     String activationCodeBindingKey="activation.code.key";
 

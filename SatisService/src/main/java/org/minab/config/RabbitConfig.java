@@ -24,6 +24,9 @@ public class RabbitConfig
     String findHamburgerKey = "key.findhamburger";
 
 
+    String queueFindUserProfile = "finduserprofileandupdatebalance";
+    String keyFindUserProfile = "key.finduserprofileandupdatebalance";
+
     @Bean
     public DirectExchange directExchangeAuth(){
         return new DirectExchange(directExchangeAuth);
@@ -42,6 +45,12 @@ public class RabbitConfig
         return new Queue(queueFindHamburger);
     }
 
+
+    @Bean
+    public Queue queueFindUserProfile(){
+        return new Queue(queueFindUserProfile);
+    }
+
     @Bean
     public Binding bindingSaveDirectExchange(Queue queueSaveSepet, DirectExchange directExchangeAuth){
         return BindingBuilder.bind(queueSaveSepet).to(directExchangeAuth).with(saveBindingKey);
@@ -50,6 +59,12 @@ public class RabbitConfig
     @Bean
     public Binding bindingFindHamburger(Queue queueFindHamburger, DirectExchange directExchangeAuth){
         return BindingBuilder.bind(queueFindHamburger).to(directExchangeAuth).with(findHamburgerKey);
+    }
+
+
+    @Bean
+    public Binding bindingFindUserProfile(Queue queueFindUserProfile, DirectExchange directExchangeAuth){
+        return BindingBuilder.bind(queueFindUserProfile).to(directExchangeAuth).with(keyFindUserProfile);
     }
 
     @Bean

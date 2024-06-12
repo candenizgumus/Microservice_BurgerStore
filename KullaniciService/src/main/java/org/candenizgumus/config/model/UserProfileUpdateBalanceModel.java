@@ -1,4 +1,4 @@
-package org.minab.dto;
+package org.candenizgumus.config.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Data
-public class SiparisSaveRequestDto {
-    Long sepetId;
-    Long userProfileId;
-    Double toplamTutar;
+public class UserProfileUpdateBalanceModel
+{
+    public Long userProfileId;
+    public double toplamTutar;
 }

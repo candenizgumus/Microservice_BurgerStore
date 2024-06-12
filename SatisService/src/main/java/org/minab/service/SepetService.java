@@ -37,6 +37,11 @@ public class SepetService {
 
     }
 
+    public Sepet findById(Long sepetId) {
+
+        return sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
+    }
+
 
     public String sepeteHamburgerEkle(Long sepetId,Long hamburgerId, Integer adet, Set<ECikartilacakUrunMalzemeleri> cikarilacakMalzemeler, Set<EExtraMalzeme> ekstraMalzemeler, EPismeDerecesi pismeDerecesi, Set<ESos> soslar)
     {

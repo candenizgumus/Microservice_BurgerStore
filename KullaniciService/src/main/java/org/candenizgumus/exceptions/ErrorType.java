@@ -28,7 +28,8 @@ public enum ErrorType
     USER_NOT_FOUND(1017, "User bulunamadı.", HttpStatus.BAD_REQUEST),
     INTERNAL_SERVER_ERROR(1018, "Aktivasyon işlemleri yapılamıyor. Server Hatası.", HttpStatus.INTERNAL_SERVER_ERROR),
     ACCOUNT_ALREADY_ACTIVE(1019,"Hesabınız zaten aktif durumda.",HttpStatus.BAD_REQUEST),
-    ACCOUNT_DELETED(1020, "Hesabınız silinmiş. Aktivasyon işlemi gerçekleştirilemez", HttpStatus.BAD_REQUEST);
+    ACCOUNT_DELETED(1020, "Hesabınız silinmiş. Aktivasyon işlemi gerçekleştirilemez", HttpStatus.BAD_REQUEST),
+    INSUFFICIENT_BALANCE(1021   ,   "Yetersiz bakiye" , HttpStatus.BAD_REQUEST),;
     private Integer code;
     private String message;
     private HttpStatus httpStatus;
