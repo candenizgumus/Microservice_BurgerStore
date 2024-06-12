@@ -16,7 +16,7 @@ ext {
             springBotDataJpa                    :"org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
             springBotDataMongo                  :"org.springframework.boot:spring-boot-starter-data-mongodb:$versions.springBoot",
             springEmail                         :"org.springframework.boot:spring-boot-starter-mail:$versions.springBoot",
-
+            redis                               :"org.springframework.boot:spring-boot-starter-data-redis",
             springBootSecurity                  :"org.springframework.boot:spring-boot-starter-security:$versions.springBoot",
 
 
