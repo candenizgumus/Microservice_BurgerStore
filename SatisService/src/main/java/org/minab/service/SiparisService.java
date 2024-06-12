@@ -4,6 +4,8 @@ import org.example.config.model.UserProfileUpdateBalanceModel;
 import org.minab.dto.response.SepetGoruntuleResponse;
 import org.minab.entity.Sepet;
 import org.minab.entity.Siparis;
+import org.minab.exceptions.ErrorType;
+import org.minab.exceptions.SatisServiceException;
 import org.minab.repository.SiparisRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -26,7 +28,11 @@ public class SiparisService
         SepetGoruntuleResponse sepetGoruntule = sepetService.sepetiGoruntule(sepetId);
         // Kullanıcı bakiyesinin kontrolu ve bakiye güncelleme
         UserProfileUpdateBalanceModel message = UserProfileUpdateBalanceModel.builder().userProfileId(sepet.getUserProfileId()).toplamTutar(sepetGoruntule.getToplam()).build();
-        rabbitTemplate.convertAndSend("direct.exchange", "key.finduserprofileandupdatebalance", message);
+        Boolean bakiyeBoolean = (Boolean)rabbitTemplate.convertSendAndReceive("direct.exchange", "key.finduserprofileandupdatebalance", message);
+        if (!bakiyeBoolean)
+        {
+            throw new SatisServiceException(ErrorType.INSUFFICIENT_BALANCE);
+        }
 
 
         //Sepetteki ürünleri silme

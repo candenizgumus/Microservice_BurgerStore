@@ -30,7 +30,7 @@ public class UserProfileService
     }
 
     @RabbitListener(queues = "finduserprofileandupdatebalance")
-    public void find(UserProfileUpdateBalanceModel dto)
+    public Boolean find(UserProfileUpdateBalanceModel dto)
     {
         //UserProfile bulma
         UserProfile userProfile = userProfileRepository.findById(dto.getUserProfileId()).orElseThrow(() -> new KullaniciServiceException(ErrorType.USER_NOT_FOUND));
@@ -38,7 +38,7 @@ public class UserProfileService
         //Kullanıcı bakiyesinin kontrolu ve bakiye güncelleme
         if (userProfile.getBakiye()+userProfile.getPuan()<dto.getToplamTutar())
         {
-            System.out.println("Bakiye yetersiz"); //TODO BURADA HATA FIRLATINCA RABBİT SONSUZ DÖNGÜYE GİRİYOR.
+            return false;
         }else
         {
 
@@ -54,6 +54,7 @@ public class UserProfileService
             }
 
             userProfileRepository.save(userProfile);
+            return true;
         }
     }
 

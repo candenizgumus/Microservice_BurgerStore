@@ -34,7 +34,7 @@ public class Sepet {
 
 
     Long userProfileId;
-    @OneToMany( orphanRemoval = true)
+    @OneToMany( cascade = CascadeType.ALL,orphanRemoval = true)
     List<SepetDetay> sepetDetayList;
     @Builder.Default
     Double araToplam = 0.0;
