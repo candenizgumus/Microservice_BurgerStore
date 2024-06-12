@@ -37,6 +37,12 @@ public class SepetService {
 
     }
 
+    public Sepet save(Sepet sepet) {
+
+        return sepetRepository.save(sepet);
+
+    }
+
     public Sepet findById(Long sepetId) {
 
         return sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));

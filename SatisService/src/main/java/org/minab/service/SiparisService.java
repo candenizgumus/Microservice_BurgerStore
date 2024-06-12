@@ -34,6 +34,8 @@ public class SiparisService
             throw new SatisServiceException(ErrorType.INSUFFICIENT_BALANCE);
         }
 
+        sepet.getSepetDetayList().clear();
+        sepetService.save(sepet);
 
         //Sepetteki ürünleri silme
         sepetService.sepetiTemizle(sepetId);
