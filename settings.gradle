@@ -4,5 +4,4 @@ include 'KullaniciService'
 include 'UrunService'
 include 'SatisService'
 include 'EmailService'
-include 'GatewayService'
 

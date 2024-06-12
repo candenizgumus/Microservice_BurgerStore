@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -49,10 +50,9 @@ public class SepetService {
     }
 
 
-    public String sepeteHamburgerEkle(Long sepetId,Long hamburgerId, Integer adet, Set<ECikartilacakUrunMalzemeleri> cikarilacakMalzemeler, Set<EExtraMalzeme> ekstraMalzemeler, EPismeDerecesi pismeDerecesi, Set<ESos> soslar)
-    {
+    public String sepeteHamburgerEkle(Long sepetId, Long hamburgerId, Integer adet, Set<ECikartilacakUrunMalzemeleri> cikarilacakMalzemeler, Set<EExtraMalzeme> ekstraMalzemeler, EPismeDerecesi pismeDerecesi, Set<ESos> soslar) {
         //Hamburgeri bulma
-        HamburgerModel hamburgerModel = (HamburgerModel)rabbitTemplate.convertSendAndReceive("direct.exchange", "key.findhamburger", hamburgerId);
+        HamburgerModel hamburgerModel = (HamburgerModel) rabbitTemplate.convertSendAndReceive("direct.exchange", "key.findhamburger", hamburgerId);
         //Sepeti bulma ve kontrol
         Sepet sepet = sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
         //Fiyatını hesaplama
@@ -151,21 +151,16 @@ public class SepetService {
     }
 
 
-
-    private Double sosFiyatFarkiHesaplama(Set<EExtraMalzeme> ekstraMalzemeler, Set<ESos> soslar)
-    {
+    private Double sosFiyatFarkiHesaplama(Set<EExtraMalzeme> ekstraMalzemeler, Set<ESos> soslar) {
         double ekstraFiyatFarki = 0.0;
 
 
-        for (EExtraMalzeme malzeme : ekstraMalzemeler)
-        {
+        for (EExtraMalzeme malzeme : ekstraMalzemeler) {
             ekstraFiyatFarki += malzeme.getFiyat();
         }
-        for (ESos sos : soslar)
-        {
+        for (ESos sos : soslar) {
             //2 den fazla sos varsa fiyatını topluyor
-            if (soslar.size()>2)
-            {
+            if (soslar.size() > 2) {
                 ekstraFiyatFarki += sos.getFiyat();
             }
 
@@ -174,22 +169,20 @@ public class SepetService {
         return ekstraFiyatFarki;
     }
 
-    public SepetGoruntuleResponse sepetiGoruntule(Long sepetId)
-    {
+    public SepetGoruntuleResponse sepetiGoruntule(Long sepetId) {
         Sepet sepet = sepetRepository.findById(sepetId).orElseThrow(() -> new SatisServiceException(ErrorType.SEPET_NOT_FOUND));
         List<SepetDetay> sepetDetayList = sepetDetayService.findAllBySepetId(sepetId);
         sepet.setAraToplam(0.0); //TODO HATADAN KAYNAKLI BURADA ARA TOPLAM SIFIRA EŞİTLENDİ
         sepetDetayList.forEach(sepetDetay -> sepet.getSepetDetayList().add(sepetDetay));
-        sepetDetayList.forEach(sepetDetay -> sepet.setAraToplam(sepetDetay.getToplamFiyat()+sepet.getAraToplam()));
-        sepet.setVergi(sepet.getAraToplam()*0.2);
-        sepet.setToplam(sepet.getAraToplam()+sepet.getVergi());
+        sepetDetayList.forEach(sepetDetay -> sepet.setAraToplam(sepetDetay.getToplamFiyat() + sepet.getAraToplam()));
+        sepet.setVergi(sepet.getAraToplam() * 0.2);
+        sepet.setToplam(sepet.getAraToplam() + sepet.getVergi());
 
 
         //Aciklamaları dtoya çevirme
 
         List<SepetDetayGoruntuleResponse> sepetDetayGoruntuleResponseList = new ArrayList<>();
-        for (SepetDetay sepetDetay : sepetDetayList)
-        {
+        for (SepetDetay sepetDetay : sepetDetayList) {
             SepetDetayGoruntuleResponse saved = SepetDetayGoruntuleResponse
                     .builder()
                     .urunFiyati(sepetDetay.getUrunFiyati())
@@ -219,11 +212,9 @@ public class SepetService {
 
     }
 
-    public String sepetiTemizle(Long sepetId)
-    {
+    public String sepetiTemizle(Long sepetId) {
         List<SepetDetay> sepetDetayList = sepetDetayService.findAllBySepetId(sepetId);
-        if (sepetDetayList.isEmpty())
-        {
+        if (sepetDetayList.isEmpty()) {
             throw new SatisServiceException(ErrorType.SEPET_EMPTY);
         }
         sepetDetayList.forEach(sepetDetay -> sepetDetayService.deleteById(sepetDetay.getId()));

@@ -14,6 +14,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class HamburgerService
@@ -44,6 +47,22 @@ public class HamburgerService
         }
         HamburgerModel hamburgerModel = HamburgerModel.builder().id(hamburger.getId()).ad(hamburger.getAd()).aciklama(hamburger.getAciklama()).birimFiyat(hamburger.getBirimFiyat()).build();
         return hamburgerModel;
+    }
+
+
+
+    @Cacheable(value = "hamburger")
+    public List<HamburgerModel> findAll() {
+        List<Hamburger> hamburgers = hamburgerRepository.findAll();
+        return hamburgers.stream()
+                .map(hamburger -> HamburgerModel.builder()
+                        .id(hamburger.getId())
+                        .ad(hamburger.getAd())
+                        .aciklama(hamburger.getAciklama())
+                        .birimFiyat(hamburger.getBirimFiyat())
+                        .build())
+                .collect(Collectors.toList());
+
     }
 
 

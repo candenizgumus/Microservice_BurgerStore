@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 import static org.example.constants.EndPoints.*;
 
 
@@ -33,6 +35,11 @@ public class HamburgerController
     public ResponseEntity<HamburgerModel> findById(Long hamburgerId)
     {
         return ResponseEntity.ok(hamburgerService.find(hamburgerId));
+    }
+
+    @GetMapping(FINDALL)
+    public ResponseEntity<List<HamburgerModel>> findAll() {
+        return ResponseEntity.ok(hamburgerService.findAll());
     }
 
 
