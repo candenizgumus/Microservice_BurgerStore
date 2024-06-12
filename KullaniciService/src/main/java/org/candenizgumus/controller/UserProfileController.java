@@ -1,9 +1,9 @@
 package org.candenizgumus.controller;
 
+import org.candenizgumus.constants.EndPoints;
 import org.candenizgumus.service.UserProfileService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.candenizgumus.constants.EndPoints.USERPROFILE;
 
@@ -13,5 +13,11 @@ import static org.candenizgumus.constants.EndPoints.USERPROFILE;
 public class UserProfileController
 {
     private final UserProfileService userProfileService;
+
+    @PutMapping(EndPoints.BAKIYEEKLE)
+    public String bakiyeEkle(@RequestParam Double eklenecekBakiye, @RequestParam Long userId)
+    {
+        return userProfileService.bakiyeEkle(   eklenecekBakiye, userId);
+    }
 
 }

@@ -26,4 +26,5 @@ public class EndPoints
     public static final String ACTIVATION    = "/activation";
 
 
+    public static final String BAKIYEEKLE =     "/bakiyeekle";
 }

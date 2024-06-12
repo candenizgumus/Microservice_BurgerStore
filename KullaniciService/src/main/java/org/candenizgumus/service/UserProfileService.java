@@ -59,4 +59,13 @@ public class UserProfileService
     }
 
 
+    public String bakiyeEkle(Double eklenecekBakiye, Long userId)
+    {
+        UserProfile userProfile = findById(userId);
+
+        userProfile.setBakiye(userProfile.getBakiye()+eklenecekBakiye);
+
+        userProfileRepository.save(userProfile);
+        return "Bakiye eklendi";
+    }
 }
