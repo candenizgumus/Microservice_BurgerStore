@@ -34,8 +34,17 @@ public class HamburgerService
     @Cacheable(value = "hamburger", key = "#hamburgerId")
     public HamburgerModel find(Long hamburgerId)
     {
-        Hamburger hamburger = hamburgerRepository.findById(hamburgerId).orElseThrow(() -> new UrunServiceException(ErrorType.HAMBURGER_NOT_FOUND));
+        //Rabbitlistener ve cache olan yerde hata fırlatınca rabbit sonsuz döngüye giriyor cache de ayrı hatalar fırlatıyor.
+        Hamburger hamburger = hamburgerRepository.findById(hamburgerId).orElse(null);
+        if (hamburger == null) {
+
+            System.err.println("Hamburger not found with ID: " + hamburgerId);
+
+            return HamburgerModel.builder().id(-1L).ad("Hamburger Not Found").aciklama("Hamburger Not Found").birimFiyat(0.0).build();
+        }
         HamburgerModel hamburgerModel = HamburgerModel.builder().id(hamburger.getId()).ad(hamburger.getAd()).aciklama(hamburger.getAciklama()).birimFiyat(hamburger.getBirimFiyat()).build();
         return hamburgerModel;
     }
+
+
 }
