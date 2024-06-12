@@ -47,7 +47,8 @@ public class UserProfile
     ECinsiyet cinsiyet;
     @Builder.Default
     Double puan = 7.0;
-    Double bakiye;
+    @Builder.Default
+    Double bakiye = 0.0;
     Long sepetId;
 
 }

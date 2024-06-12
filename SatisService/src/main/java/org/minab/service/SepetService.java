@@ -207,7 +207,9 @@ public class SepetService {
                 .odemeTipi(sepet.getOdemeTipi().name())
                 .servisTipi(sepet.getServisTipi().name())
                 .build();
+
         return sepetGoruntuleResponse;
+
 
     }
 
