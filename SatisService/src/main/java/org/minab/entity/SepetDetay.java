@@ -24,7 +24,7 @@ public class SepetDetay
     Double urunFiyati;
     Integer adet;
     Double toplamFiyat;
-    @ElementCollection
+    @ElementCollection()
     List<String> aciklamalar;
 
 

@@ -38,7 +38,7 @@ public class UserProfileService
         //Kullanıcı bakiyesinin kontrolu ve bakiye güncelleme
         if (userProfile.getBakiye()+userProfile.getPuan()<dto.getToplamTutar())
         {
-            throw new KullaniciServiceException(ErrorType.INSUFFICIENT_BALANCE);
+            System.out.println("Bakiye yetersiz"); //TODO BURADA HATA FIRLATINCA RABBİT SONSUZ DÖNGÜYE GİRİYOR.
         }else
         {
 
