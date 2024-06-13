@@ -15,6 +15,7 @@ import org.candenizgumus.repository.AuthRepository;
 import org.candenizgumus.utility.CodeGenerator;
 import lombok.RequiredArgsConstructor;
 import org.candenizgumus.utility.JwtTokenManager;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +55,7 @@ public class AuthService
                 .soyad(dto.getSoyad())
                 .cinsiyet(dto.getCinsiyet())
                 .dogumTarihi(dto.getDogumTarihi())
+                .role(dto.getRole())
                 .build();
 
         //Auth'a aktivasyon kodu setleme
@@ -160,5 +162,21 @@ public class AuthService
         auth.setSifre(dto.getNewPassword());
         authRepository.save(auth);
         return "Şifreniz başarı ile değiştirildi.";
+    }
+
+    @RabbitListener(queues = "findauthbyid")
+    public String findAuthById(Long id)
+    {
+        Auth auth = authRepository.findById(id).orElse(null);
+
+        if (auth == null)
+        {
+            return "Kullanıcı bulunamadı.";
+        }
+        else
+        {
+            return auth.getRole().name() + " " + auth.getAd();
+        }
+
     }
 }

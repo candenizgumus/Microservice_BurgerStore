@@ -8,6 +8,7 @@ import org.example.service.HamburgerService;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,12 +27,14 @@ public class HamburgerController
     private final HamburgerService hamburgerService;
 
     @PostMapping(SAVE)
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<String> save(HamburgerSaveRequest dto)
     {
         return ResponseEntity.ok(hamburgerService.save(dto));
     }
 
     @GetMapping(FINDBYID)
+    @PreAuthorize("hasAnyAuthority('USER')")
     public ResponseEntity<HamburgerModel> findById(Long hamburgerId)
     {
         return ResponseEntity.ok(hamburgerService.find(hamburgerId));

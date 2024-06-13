@@ -34,7 +34,6 @@ public class Auth
     EStatus status = EStatus.PENDING;
 
 
-
     String ad;
     String soyad;
     @Column(unique = true)
@@ -46,9 +45,8 @@ public class Auth
     @Enumerated(EnumType.STRING)
     ECinsiyet cinsiyet;
     String activationCode;
-    @Builder.Default
     @Enumerated(EnumType.STRING)
-    ERole role = ERole.USER;
+    ERole role;
     String passwordResetCode;
 
 }

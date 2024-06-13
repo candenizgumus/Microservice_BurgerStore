@@ -24,6 +24,9 @@ public class RabbitConfig
     String queueFindUserProfile = "finduserprofileandupdatebalance";
     String keyFindUserProfile = "key.finduserprofileandupdatebalance";
 
+    String queueFindAuthById = "findauthbyid";
+    String keyFindAuthById = "key.findauthbyid";
+
 
 
     @Bean
@@ -37,9 +40,15 @@ public class RabbitConfig
         return new Queue(queueSaveSepet);
     }
 
+
     @Bean
     public Queue queueFindUserProfile(){
         return new Queue(queueFindUserProfile);
+    }
+
+    @Bean
+    public Queue queueFindAuthById(){
+        return new Queue(queueFindAuthById);
     }
 
     @Bean
@@ -50,6 +59,11 @@ public class RabbitConfig
     @Bean
     public Binding bindingFindUserProfile(Queue queueFindUserProfile, DirectExchange directExchangeAuth){
         return BindingBuilder.bind(queueFindUserProfile).to(directExchangeAuth).with(keyFindUserProfile);
+    }
+
+    @Bean
+    public Binding bindingFindAuthById(Queue queueFindAuthById, DirectExchange directExchangeAuth){
+        return BindingBuilder.bind(queueFindAuthById).to(directExchangeAuth).with(keyFindAuthById);
     }
 
     String activationCodeQueueName="activation.code.queue";
