@@ -9,4 +9,4 @@
 8. JwtToken
 
 ## PROJENIN OZELLIKLERI
-Online hamburger olusturma ve siparis verme ozelliklerine sahiptir.
+Spring Boot projesidir. Online hamburger olusturma ve siparis verme ozelliklerine sahiptir.
